@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _fetchUsers();
 
     _scrollController.addListener(() {
-      final reachBottom = _scrollController.position.pixels > _scrollController.position.maxScrollExtent;
+      final reachBottom = _scrollController.position.pixels >= _scrollController.position.maxScrollExtent;
       if (!isLoading && reachBottom) { _fetchUsersMore(); }
     });
   }
@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: ExtendedNetworkImageProvider(
-                        users[index].avatarUrl.toString()
+                        user.avatarUrl.toString()
                     ),
                   ),
                   title: Text(user.name),
@@ -139,13 +139,13 @@ class _MyHomePageState extends State<MyHomePage> {
   void _fetchUsers() async {
     try {
       setState(() {
-        this.users = [];
+        users = [];
         isLoading = true;
       });
-      final users = await repo.fetchUsers(userCount: 20, startId: 0);
+      final fetchedUsers = await repo.fetchUsers(userCount: 20, startId: 0);
       setState(() {
+        users = fetchedUsers;
         isLoading = false;
-        this.users = users;
       });
     } catch (e) {
       _showErrorDialog('データの取得に失敗しました');
@@ -157,8 +157,8 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() => isLoading = true);
       final fetchedUsers = await repo.fetchUsers(userCount: 20, startId: users.last.id);
       setState(() {
-        isLoading = false;
         users += fetchedUsers;
+        isLoading = false;
       });
     } catch (e) {
       _showErrorDialog('データの取得に失敗しました');
@@ -166,7 +166,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _showErrorDialog(String message) {
-    print("_showErrorDialog");
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
