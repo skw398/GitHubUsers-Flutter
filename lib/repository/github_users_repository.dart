@@ -1,10 +1,8 @@
 import 'package:dio/dio.dart';
-import 'user.dart';
+import '../Entity/user.dart';
 
 class GitHubUsersRepository {
-  final Dio dio;
-
-  GitHubUsersRepository({required this.dio});
+  final Dio dio = Dio();
 
   Future<List<User>> fetchUsers({required int userCount, required int startId}) async {
     final queryParameters = {
@@ -13,7 +11,6 @@ class GitHubUsersRepository {
     };
 
     await Future.delayed(const Duration(milliseconds: 500)); // デバッグ
-
     final response = await dio.get(
       'https://api.github.com/users',
       queryParameters: queryParameters,
@@ -24,6 +21,7 @@ class GitHubUsersRepository {
           .map((data) => User.fromJson(data))
           .toList();
     } else {
+      print(response.statusCode.toString());
       throw Exception('エラー');
     }
   }
