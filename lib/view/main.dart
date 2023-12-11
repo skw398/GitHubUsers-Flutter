@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../Entity/user.dart';
+import '../entity/user.dart';
 import 'github_users_list_page.dart';
 import 'user_detail_page.dart';
 

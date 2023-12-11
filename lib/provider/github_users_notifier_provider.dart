@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../Repository/github_users_repository.dart';
-import '../Entity/user.dart';
+
+
+import '../entity/user.dart';
+import '../repository/github_users_repository.dart';
 
 final gitHubUsersNotifierProvider = AsyncNotifierProvider<GitHubUsersNotifier, List<User>>(() {
   return GitHubUsersNotifier(GitHubUsersRepository());

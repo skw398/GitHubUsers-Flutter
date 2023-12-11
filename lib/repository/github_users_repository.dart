@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import '../Entity/user.dart';
+import '../entity/user.dart';
 
 class GitHubUsersRepository {
   final Dio dio = Dio();

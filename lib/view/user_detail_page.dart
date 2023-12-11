@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-import '../Entity/user.dart';
+import '../entity/user.dart';
 
 class UserDetailPage extends StatelessWidget {
   final User user;

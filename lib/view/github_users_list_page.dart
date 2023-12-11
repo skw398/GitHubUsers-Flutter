@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Entity/user.dart';
-import '../Provider/github_users_notifier_provider.dart';
-import '../Provider/scroll_controller_provider.dart';
+import '../entity/user.dart';
+import '../provider/github_users_notifier_provider.dart';
+import '../provider/scroll_controller_provider.dart';
 
 class GitHubUsersListPage extends ConsumerWidget {
   const GitHubUsersListPage({super.key});
