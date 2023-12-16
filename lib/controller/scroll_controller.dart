@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'github_users_controller.dart';
 
-final scrollControllerProvider = Provider<ScrollController>((ref) {
+part 'scroll_controller.g.dart';
+
+@riverpod
+ScrollController scrollController(ScrollControllerRef ref) {
   final controller = ScrollController();
 
   controller.addListener(() {
@@ -19,4 +22,4 @@ final scrollControllerProvider = Provider<ScrollController>((ref) {
   });
 
   return controller;
-});
+}

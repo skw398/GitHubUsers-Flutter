@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../entity/user.dart';
 import '../repository/github_users_repository.dart';
 
-final gitHubUsersControllerProvider = AsyncNotifierProvider<GitHubUsersController, List<User>>(() {
-  return GitHubUsersController(GitHubUsersRepository());
-});
+part 'github_users_controller.g.dart';
 
-class GitHubUsersController extends AsyncNotifier<List<User>> {
-  GitHubUsersController(this.repo);
+@riverpod
+class GitHubUsersController extends _$GitHubUsersController {
+  GitHubUsersController([GitHubUsersRepository? repo])
+      : repo = repo ?? GitHubUsersRepository();
 
   final GitHubUsersRepository repo;
 
   @override
-  Future<List<User>> build() async {
+  FutureOr<List<User>> build() async {
     return fetchUsers(startId: 0).then((_) => state.value ?? []);
   }
 
