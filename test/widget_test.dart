@@ -11,7 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:github_users/View/main.dart';
 import 'package:github_users/entity/user.dart';
-import 'package:github_users/provider/github_users_notifier_provider.dart';
+import 'package:github_users/controller/github_users_controller.dart';
 import 'package:mockito/mockito.dart';
 import 'github_users_notifier_test.mocks.dart';
 
@@ -22,7 +22,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          gitHubUsersNotifierProvider.overrideWith(() => GitHubUsersNotifier(mockRepo)),
+          gitHubUsersControllerProvider.overrideWith(() => GitHubUsersController(mockRepo)),
         ],
         child: MyApp(),
       ),

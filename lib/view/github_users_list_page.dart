@@ -4,32 +4,31 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../entity/user.dart';
-import '../provider/github_users_notifier_provider.dart';
-import '../provider/scroll_controller_provider.dart';
+import '../controller/github_users_controller.dart';
+import '../controller/scroll_controller.dart';
 
 class GitHubUsersListPage extends ConsumerWidget {
   const GitHubUsersListPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final gitHubUsers = ref.watch(gitHubUsersNotifierProvider);
+    final gitHubUsers = ref.watch(gitHubUsersControllerProvider);
+    ref.listen(gitHubUsersControllerProvider, (previous, next) {
+      if (next is AsyncError && ModalRoute.of(context)!.isCurrent) {
+        _showErrorDialog(context);
+      }
+    });
 
     return Scaffold(
         appBar: AppBar(title: const Text('GitHub Users')),
         body: RefreshIndicator(
             onRefresh: () async {
-              await ref
-                  .read(gitHubUsersNotifierProvider.notifier)
-                  .fetchUsers(startId: 0);
+              ref.invalidate(gitHubUsersControllerProvider);
             },
             child: gitHubUsers.when(
+                skipLoadingOnReload: true,
                 skipError: true,
                 data: (data) {
-                  final shouldShowErrorDialog = gitHubUsers.asError != null
-                      && ModalRoute.of(context)!.isCurrent
-                      && !gitHubUsers.isLoading;
-                  if (shouldShowErrorDialog) _showErrorDialog(context);
-
                   final isLoadingMore = gitHubUsers.isLoading && gitHubUsers.requireValue.isNotEmpty;
                   return ListView.separated(
                       controller: ref.watch(scrollControllerProvider),
@@ -54,7 +53,7 @@ class GitHubUsersListPage extends ConsumerWidget {
                 error: (e, s) {
                   return errorView(onReloadButtonPressedHandler: () async {
                     await ref
-                        .read(gitHubUsersNotifierProvider.notifier)
+                        .read(gitHubUsersControllerProvider.notifier)
                         .fetchUsers(startId: 0);
                   });
                 }

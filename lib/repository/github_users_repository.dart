@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import '../entity/user.dart';
 
 class GitHubUsersRepository {
@@ -21,7 +22,7 @@ class GitHubUsersRepository {
           .map((data) => User.fromJson(data))
           .toList();
     } else {
-      print(response.statusCode.toString());
+      debugPrint(response.statusCode.toString());
       throw Exception('エラー');
     }
   }
