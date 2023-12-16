@@ -1,6 +1,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:github_users/router/router.dart';
 import 'package:go_router/go_router.dart';
 
 import '../entity/user.dart';
@@ -41,7 +42,7 @@ class GitHubUsersListPage extends ConsumerWidget {
                           final user = data[index];
                           return userListTile(
                             user: user,
-                            onTapHandler: () => context.push('/user', extra: user),
+                            onTapHandler: () => UserDetailRoute($extra: user).push(context),
                           );
                         }
                       }

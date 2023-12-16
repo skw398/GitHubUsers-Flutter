@@ -46,6 +46,7 @@ dependencies:
   mockito: ^5.4.3
   riverpod_annotation: ^2.3.3
   riverpod_generator: ^2.3.9
+  go_router_builder: ^2.4.0
 
 dev_dependencies:
   flutter_test:
